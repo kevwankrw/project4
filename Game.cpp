@@ -18,31 +18,69 @@
 
 
 Game::Game() {
-    // TODO: write implementation here.
+	Player p1 = {};
+	Player p2 = {};
+
+	return; 
 }
 
 Game::Game(Player player1, string grid1, Player player2, string grid2) {
-    // TODO: write implementation here.
+	player1 = p1;
+	player2 = p2;
+
+	player1.load_grid_file("grid1.txt");
+	player2.load_grid_file("grid2.txt");
+
+	if (grid1.length == 0 || player1.load_grid_file("grid1.txt") == false) {
+		generate_random_grid(player1);
+	}
+	else {
+		player1.load_grid_file("grid1.txt");
+	}
+	if (grid2.length == 0 || player2.load_grid_file("grid2.txt") == false) {
+		generate_random_grid(player2);
+	}
+	else {
+		player2.load_grid_file("grid2.txt");
+	}
+
+
+
 }
 
 Player Game::get_p1() {
-    // TODO: write implementation here.
-    return Player();
+    return p1;
 }
 
 Player Game::get_p2() {
-    // TODO: write implementation here.
-    return Player();
+    return p2;
 }
 
 string Game::get_move(string player_name) {
-    // TODO: write implementation here.
-    return "";
+
+	string move;
+	cout << player_name << " enter your move : " << endl;
+	cin >> move;
+
+	return move;
 }
 
 bool Game::check_valid_move(string move) {
-    // TODO: write implementation here.
-    return false;
+	if (move.length != 2) {
+		cout << p1.get_name() << "you entered an invalid input" << endl;
+		return false;
+	}
+	else {
+		char row = move.at(0);
+		char col = move.at(1);
+		if ((row <= 'A' || row >= 'H') || (col <= 1 && col >= 9)) {
+			cout << p1.get_name() << "you entered an invalid position" << endl;
+				return false;
+		}
+		else {
+			return true;
+		}
+	}
 }
 
 void Game::start(char difficulty, int max_rounds) {
