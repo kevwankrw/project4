@@ -95,6 +95,7 @@ bool Player::position_not_hit(Position pos) {
 			}
 		}
 	}
+	return false;
 }
 
 void Player::attack(Player &opponent, Position pos) {
@@ -102,7 +103,7 @@ void Player::attack(Player &opponent, Position pos) {
 		return;
 	}
 	else if (position_not_hit(pos)) {
-		bool test;
+		bool test = false;
 		int ship_num = 0;
 		while (!test && (ship_num < num_ships)) {
 			if (ships[ship_num].has_position(pos)) {
@@ -134,16 +135,16 @@ void Player::attack(Player &opponent, Position pos) {
 
 void Player::announce_ship_sunk(int size) {
 	if (size == 2) {
-		cout << "Congratulations " << get_name << " ! You sunk a Destroyer" << endl;
+		cout << "Congratulations " << get_name() << " ! You sunk a Destroyer" << endl;
 	}
 	else if (size == 3) {
-		cout << "Congratulations " << get_name << " ! You sunk a Submarine" << endl;
+		cout << "Congratulations " << get_name() << " ! You sunk a Submarine" << endl;
 	}
 	else if (size == 4) {
-		cout << "Congratulations " << get_name << " ! You sunk a Battleship" << endl;
+		cout << "Congratulations " << get_name() << " ! You sunk a Battleship" << endl;
 	}
 	else if (size == 5) {
-		cout << "Congratulations " << get_name << " ! You sunk a Carrier" << endl;
+		cout << "Congratulations " << get_name() << " ! You sunk a Carrier" << endl;
 	}
 
 	return;
