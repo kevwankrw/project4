@@ -43,7 +43,7 @@ Position::Position(char row_in, char col_in) {
 }
 
 int Position::get_row() {
-    return row;
+	return row;
 }
 
 void Position::set_row(int row_in) {
@@ -51,7 +51,7 @@ void Position::set_row(int row_in) {
 }
 
 int Position::get_col() {
-    return col;
+	return col;
 }
 
 void Position::set_col(int col_in) {
@@ -113,13 +113,12 @@ int Position::check_range(int val) {
 // Your code goes above this line.
 // Don't change the implementations below!
 
-istream &operator>>(istream &is,  Position &pos) {
-    pos.read(is);
-    return is;
+istream &operator>>(istream &is, Position &pos) {
+	pos.read(is);
+	return is;
 }
 
 ostream &operator<<(ostream &os, Position pos) {
-    pos.write(os);
-    return os;
+	pos.write(os);
+	return os;
 }
-
