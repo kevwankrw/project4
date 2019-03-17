@@ -84,6 +84,8 @@ int main() {
 
 	Game playGame;
 	playGame.start(menu_choice, MAX_ROUNDS);
+	
+	print_closer();
 
     return 0;
 }
