@@ -63,7 +63,7 @@ int main() {
     (Note: you will only play one instance of the game, i.e., after the game ends, 
        the program ends.)
 */
-    print_initial_header();
+	print_initial_header();
 
 	cout << "Enter your name:";
 	string name_val;
@@ -82,9 +82,11 @@ int main() {
 
 	int menu_choice = get_menu_choice();
 
-	Game playGame;
+	Player player1(name_val);
+	Player cpu("CPU");
+	Game playGame(player1, "grid1.txt", cpu, "grid2.txt");
 	playGame.start(menu_choice, MAX_ROUNDS);
-	
+
 	print_closer();
 
     return 0;
