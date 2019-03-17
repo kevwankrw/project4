@@ -64,38 +64,81 @@ char Player::get_grid_at(int row, int col) {
 }
 
 char Player::get_opponent_grid_at(int row, int col) {
-    // TODO: write implementation here.
-    return '?';
+	if (row <= MAX_GRID_SIZE && col <= MAX_GRID_SIZE) {
+		if (row >= 0 && col >= 0) {
+			return opponent_grid[row][col];
+		}
+	}
+	return 'F';;
 }
 
 void Player::add_ship(Ship ship) {
-    // TODO: write implementation here.
+	if (num_ships >= MAX_NUM_SHIPS) {
+		return;
+	}
+	else if () {
+
+	}
     return;
 }
 
 bool Player::position_not_hit(Position pos) {
-    // TODO: write implementation here.
-    return false;
+	for (int i = 0; i < MAX_GRID_SIZE; i++) {
+		for (int j = 0; j < MAX_GRID_SIZE; j++) {
+			if (grid[i][j] == EMPTY_LETTER || grid[i][j] == SHIP_LETTER) {
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
 }
 
 void Player::attack(Player &opponent, Position pos) {
-    // TODO: write implementation here.
+	if (position_not_hit(pos) == false) {
+		opponent_grid[pos.get_row][pos.get_col] = HIT_LETTER;
+		cout << opponent << " " << pos << " hit" << endl;
+	}
+	else if(position_not_hit(pos) == true) {
+		opponent_grid[pos.get_row][pos.get_col] = MISS_LETTER;
+		cout << opponent << " " << pos << " miss" << endl;
+	}
+
+	
     return;
 }
 
 void Player::announce_ship_sunk(int size) {
-    // TODO: write implementation here.
+	if (size == 2) {
+		cout << "Congratulations " << get_name << " ! You sunk a Destroyer" << endl;
+	}
+	else if (size == 3) {
+		cout << "Congratulations " << get_name << " ! You sunk a Submarine" << endl;
+	}
+	else if (size == 4) {
+		cout << "Congratulations " << get_name << " ! You sunk a Battleship" << endl;
+	}
+	else if (size == 5) {
+		cout << "Congratulations " << get_name << " ! You sunk a Carrier" << endl;
+	}
+
     return;
 }
 
 bool Player::load_grid_file(string filename) {
-    // TODO: write implementation here.
+	ifstream("grid1.txt");
+	
     return false;
 }
 
 bool Player::destroyed() {
-    // TODO: write implementation here.
-    return false;
+	if (remaining_ships == 0) {
+		return true;
+	}
+	else {
+		return false;
+	}
 }
 
 // Your code goes above this line.
