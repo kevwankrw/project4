@@ -73,7 +73,7 @@ bool Game::check_valid_move(string move) {
 	else {
 		char row = move.at(0);
 		char col = move.at(1);
-		if ((row <= 'A' || row >= 'H') || (col <= 1 && col >= 9)) {
+		if ((row <= 'A' || row >= 'H') || (col <= '1' && col >= '9')) {
 			cout << p1.get_name() << "you entered an invalid position" << endl;
 				return false;
 		}
