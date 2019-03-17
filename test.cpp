@@ -32,6 +32,7 @@ int main() {
     test_position();
     test_ship();
     test_player();
+    test_game();
     return 0;
 }
 
@@ -122,5 +123,18 @@ void test_ship() {
 void test_player() {
     // Write your tests here
     return;
+}
+
+void test_game() {
+	Player p1("B");
+	Player p2("Y");
+	Game game(p1, "grid1.txt", p2, "grid2.txt");
+
+	Player p3 = game.get_p1();
+	Player p4 = game.get_p2();
+	string move1 = game.get_move(p1.get_name());
+	string move2 = game.get_move(p2.get_name());
+	cout << game.check_valid_move(move1) << endl;
+	cout << game.check_valid_move(move2) << endl;
 }
 
