@@ -63,5 +63,27 @@ int main() {
     (Note: you will only play one instance of the game, i.e., after the game ends, 
        the program ends.)
 */
+    print_initial_header();
+
+	cout << "Enter your name:";
+	string name_val;
+	cin >> name_val;
+	cout << endl;
+
+	cout << "Read your grid from file grid1.txt? (y or n):";
+	char input1;
+	cin >> input1;
+	cout << endl;
+
+	cout << "Read CPU grid from file grid2.txt? (y or n):";
+	char input2;
+	cin >> input2;
+	cout << endl;
+
+	int menu_choice = get_menu_choice();
+
+	Game playGame;
+	playGame.start(menu_choice, MAX_ROUNDS);
+
     return 0;
 }
