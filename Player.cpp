@@ -77,13 +77,25 @@ void Player::add_ship(Ship ship) {
 		return;
 	}
 	else {
+		Position start = ships[num_ships].get_start();
+		Position end = ships[num_ships].get_end();
 		ships[num_ships] = ship;
+		if (ships[num_ships].is_horizontal()) {
+			for (int i = start.get_col(); i < end.get_col(); ++i) {
+				grid[ships[start.get_row]][i] = SHIP_LETTER;
+			}
+		}
+		else {
+			for (int i = start.get_row; i < end.get_row(); ++i) {
+				grid[i][end.get_col()] = SHIP_LETTER;
+			}
+		}
 		num_ships++;
 		remaining_ships++;
+		
 	}
 	return;
 }
-
 bool Player::position_not_hit(Position pos) {
 	for (int i = 0; i < MAX_GRID_SIZE; i++) {
 		for (int j = 0; j < MAX_GRID_SIZE; j++) {
