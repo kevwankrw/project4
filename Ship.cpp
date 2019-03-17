@@ -18,10 +18,10 @@
 
 
 Ship::Ship() {
-	start.set_col = 0;
-	start.set_row = 0;
-	end.set_col = 0;
-	end.set_row = 0;
+	start.set_col(0);
+	start.set_row(0);
+	end.set_col(0);
+	end.set_row(0);
 	num_hits = 0;
 	size = 0;
 }
@@ -31,10 +31,10 @@ Ship::Ship(Position start_in, Position end_in) {
 	end = end_in;
 	num_hits = 0;
 	if (start.get_row() == end.get_row()) {
-		size = abs(start.get_col() - end.get_col());
+		size = abs(start.get_col() - end.get_col()) + 1;
 	}
 	else if (start.get_col() == end.get_col()) {
-		size = abs(start.get_row() - end.get_row());
+		size = abs(start.get_row() - end.get_row()) + 1;
 	}
 }
 
@@ -62,7 +62,7 @@ bool Ship::is_horizontal() {
 bool Ship::has_position(Position pos) {
 	if (start.get_col() == end.get_col()) {
 		if (start.get_row() > end.get_row()) {
-			if ((pos.get_row <= start.get_row()) && (pos.get_row() >= end.get_row())) {
+			if ((pos.get_row() <= start.get_row()) && (pos.get_row() >= end.get_row())) {
 				return true;
 			}
 			else {
@@ -70,7 +70,7 @@ bool Ship::has_position(Position pos) {
 			}
 		}
 		else if (start.get_row() < end.get_row()) {
-			if ((pos.get_row >= start.get_row()) && (pos.get_row() <= end.get_row())) {
+			if ((pos.get_row() >= start.get_row()) && (pos.get_row() <= end.get_row())) {
 				return true;
 			}
 			else {
@@ -80,7 +80,7 @@ bool Ship::has_position(Position pos) {
 	}
 	else if (start.get_row() == end.get_row()) {
 		if (start.get_col() > end.get_col()) {
-			if ((pos.get_col <= start.get_col()) && (pos.get_col() >= end.get_col())) {
+			if ((pos.get_col() <= start.get_col()) && (pos.get_col() >= end.get_col())) {
 				return true;
 			}
 			else {
@@ -88,7 +88,7 @@ bool Ship::has_position(Position pos) {
 			}
 		}
 		else if (start.get_col() < end.get_col()) {
-			if ((pos.get_col >= start.get_col()) && (pos.get_col() <= end.get_col())) {
+			if ((pos.get_col() >= start.get_col()) && (pos.get_col() <= end.get_col())) {
 				return true;
 			}
 			else {
@@ -96,10 +96,11 @@ bool Ship::has_position(Position pos) {
 			}
 		}
 	}
+	return false;
 }
 
 void Ship::hit() {
-	if (num_hits > size) {
+	if (num_hits < size) {
 		num_hits += 1;
 	}
 }
