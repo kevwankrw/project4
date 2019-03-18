@@ -24,13 +24,16 @@ Player::Player() {
 	init_grid();
 }
 
+
+
 Player::Player(string name_val) {
 	name = name_val;
 	num_ships = 0;
 	remaining_ships = 0;
 	init_grid();
-
 }
+
+
 
 void Player::init_grid() {
 	for (int i = 0; i < MAX_GRID_SIZE; i++) {
@@ -42,17 +45,24 @@ void Player::init_grid() {
 	return;
 }
 
+
+
 string Player::get_name() {
 	return name;
 }
+
+
 
 int Player::get_num_ships() {
 	return num_ships;
 }
 
+
+
 int Player::get_remaining_ships() {
 	return remaining_ships;
 }
+
 
 char Player::get_grid_at(int row, int col) {
 	if (row <= MAX_GRID_SIZE && col <= MAX_GRID_SIZE) {
@@ -69,46 +79,45 @@ char Player::get_opponent_grid_at(int row, int col) {
 			return opponent_grid[row][col];
 		}
 	}
-	return 'F';;
+	return 'F';
 }
 
 void Player::add_ship(Ship ship) {
 	if (num_ships >= MAX_NUM_SHIPS) {
-		return;
 	}
 	else {
-		Position start = ships[num_ships].get_start();
-		Position end = ships[num_ships].get_end();
+		Position start = ship.get_start();
+		Position end = ship.get_end();
 		ships[num_ships] = ship;
 		if (ships[num_ships].is_horizontal()) {
-			for (int i = start.get_col(); i < end.get_col(); ++i) {
-				grid[ships[start.get_row]][i] = SHIP_LETTER;
+			for (int i = start.get_col(); i <= end.get_col(); ++i) {
+				grid[start.get_row()][i] = SHIP_LETTER;
 			}
 		}
 		else {
-			for (int i = start.get_row; i < end.get_row(); ++i) {
+			for (int i = start.get_row(); i <= end.get_row(); ++i) {
 				grid[i][end.get_col()] = SHIP_LETTER;
 			}
 		}
 		num_ships++;
 		remaining_ships++;
-		
 	}
-	return;
 }
+
+
+
+
 bool Player::position_not_hit(Position pos) {
-	for (int i = 0; i < MAX_GRID_SIZE; i++) {
-		for (int j = 0; j < MAX_GRID_SIZE; j++) {
-			if (grid[i][j] == EMPTY_LETTER || grid[i][j] == SHIP_LETTER) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
+	if (grid[pos.get_row()][pos.get_col()] == EMPTY_LETTER ||
+		grid[pos.get_row()][pos.get_col()] == SHIP_LETTER) {
+			return true;
 	}
-	return false;
+	else {
+		return false;
+	}
 }
+
+
 
 void Player::attack(Player &opponent, Position pos) {
 	if (!position_not_hit(pos)) {
@@ -127,12 +136,12 @@ void Player::attack(Player &opponent, Position pos) {
 			++ship_num;
 		}
 		if (!test) {
-			cout << name << pos << "miss\n";
+			cout << name << " " << pos << " " << "miss\n";
 			opponent_grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 			opponent.grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 		}
 		else if (test) {
-			cout << name << pos << "hit\n";
+			cout << name << " " << pos  << " " << "hit\n";
 			opponent_grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 			opponent.grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 			ships[ship_num].hit();
@@ -145,22 +154,26 @@ void Player::attack(Player &opponent, Position pos) {
 	return;
 }
 
+
+
 void Player::announce_ship_sunk(int size) {
 	if (size == 2) {
-		cout << "Congratulations " << get_name() << " ! You sunk a Destroyer" << endl;
+		cout << "Congratulations " << get_name() << "! You sunk a Destroyer" << endl;
 	}
 	else if (size == 3) {
-		cout << "Congratulations " << get_name() << " ! You sunk a Submarine" << endl;
+		cout << "Congratulations " << get_name() << "! You sunk a Submarine" << endl;
 	}
 	else if (size == 4) {
-		cout << "Congratulations " << get_name() << " ! You sunk a Battleship" << endl;
+		cout << "Congratulations " << get_name() << "! You sunk a Battleship" << endl;
 	}
 	else if (size == 5) {
-		cout << "Congratulations " << get_name() << " ! You sunk a Carrier" << endl;
+		cout << "Congratulations " << get_name() << "! You sunk a Carrier" << endl;
 	}
 
 	return;
 }
+
+
 
 bool Player::load_grid_file(string filename) {
 	char tempRowS;
@@ -183,7 +196,7 @@ bool Player::load_grid_file(string filename) {
 				if (num_temp == 3) {
 					tempRowE = temp;
 				}
- 			}
+			}
 			else if ((temp >= 'A' && temp <= 'Z') || (temp <= 'a' && temp >= 'z')) {
 				if (num_temp == 2) {
 					tempColS = temp;
@@ -203,6 +216,8 @@ bool Player::load_grid_file(string filename) {
 	}
 	return true;
 }
+
+
 
 bool Player::destroyed() {
 	if (remaining_ships == 0) {
