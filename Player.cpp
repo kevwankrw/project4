@@ -134,27 +134,23 @@ bool Player::position_not_hit(Position pos) {
 
 
 void Player::attack(Player &opponent, Position pos) {
-	if (!position_not_hit(pos)) {
-		return;
-	}
-	else {
-		bool test = false;
+	if (opponent.position_not_hit(pos)) {
+		bool is_ship_there = false;
 		int ship_num = 0;
-		while (!test && (ship_num < num_ships)) {
+		while (!is_ship_there && (ship_num < opponent.get_num_ships())) {
 			if (opponent.ships[ship_num].has_position(pos)) {
-				test = true;
+				is_ship_there = true;
 			}
 			else {
-				test = false;
+				++ship_num;
 			}
-			++ship_num;
 		}
-		if (!test) {
+		if (!is_ship_there) {
 			cout << name << " " << pos << " " << "miss\n";
 			opponent_grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 			opponent.grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 		}
-		else if (test) {
+		else if (is_ship_there) {
 			cout << name << " " << pos << " " << "hit\n";
 			opponent_grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 			opponent.grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
@@ -165,9 +161,7 @@ void Player::attack(Player &opponent, Position pos) {
 			}
 		}
 	}
-	return;
 }
-
 
 
 void Player::announce_ship_sunk(int size) {
