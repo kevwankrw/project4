@@ -111,6 +111,8 @@ void test_ship() {
 	ship7.has_position(pos6);
 
 	ship2.hit();
+	ship2.hit();
+	ship2.hit();
 	ship3.hit();
 	ship4.hit();
 	ship5.hit();
