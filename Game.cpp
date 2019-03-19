@@ -52,7 +52,7 @@ Player Game::get_p2() {
 
 string Game::get_move(string player_name) {
 
-	string move;
+	string move = "";
 	cout << player_name << " enter your move : " << endl;
 	cin >> move;
 
