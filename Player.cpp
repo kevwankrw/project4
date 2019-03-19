@@ -137,11 +137,11 @@ void Player::attack(Player &opponent, Position pos) {
 	if (!position_not_hit(pos)) {
 		return;
 	}
-	else if (position_not_hit(pos)) {
+	else {
 		bool test = false;
 		int ship_num = 0;
 		while (!test && (ship_num < num_ships)) {
-			if (ships[ship_num].has_position(pos)) {
+			if (opponent.ships[ship_num].has_position(pos)) {
 				test = true;
 			}
 			else {
@@ -155,13 +155,13 @@ void Player::attack(Player &opponent, Position pos) {
 			opponent.grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 		}
 		else if (test) {
-			cout << name << " " << pos  << " " << "hit\n";
+			cout << name << " " << pos << " " << "hit\n";
 			opponent_grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 			opponent.grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
-			ships[ship_num].hit();
-			if (ships[ship_num].has_sunk()) {
-				remaining_ships--;
-				announce_ship_sunk(ships[ship_num].get_size());
+			opponent.ships[ship_num].hit();
+			if (opponent.ships[ship_num].has_sunk()) {
+				opponent.remaining_ships--;
+				announce_ship_sunk(opponent.ships[ship_num].get_size());
 			}
 		}
 	}
