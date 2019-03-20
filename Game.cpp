@@ -67,7 +67,7 @@ bool Game::check_valid_move(string move) {
 	else {
 		char row = move.at(0);
 		char col = move.at(1);
-		if ((row <= '1' || row >= '8') || (col <= 'A' && col >= 'H')) {
+		if ((row <= '1' || row >= '8') || (toupper(col) <= 'A' && toupper(col) >= 'H')) {
 			cout << p1.get_name() << "you entered an invalid position" << endl;
 			return false;
 		}
@@ -79,12 +79,12 @@ bool Game::check_valid_move(string move) {
 
 void Game::start(char difficulty, int max_rounds) {
 	int num_rounds = 0;
-	while (num_rounds < MAX_ROUNDS || p1.get_remaining_ships() != 0 ||
-		p2.get_remaining_ships() != 0) {
+	while ((num_rounds < MAX_ROUNDS) && !p1.destroyed() && !p2.destroyed()) {
 		string p1Move = get_move(p1.get_name());
 		while (!check_valid_move(p1Move)) {
 			p1Move = get_move(p1.get_name());
 		}
+		num_rounds++;
 		Position move(p1Move.at(0), p1Move.at(1));
 		p1.attack(p2, move);
 		opponent_make_move(difficulty);
@@ -93,7 +93,6 @@ void Game::start(char difficulty, int max_rounds) {
 		p1.print_grid();
 		cout << "CPU's grid" << endl;
 		p1.print_opponent_grid();
-		num_rounds++;
 	}
 	if (num_rounds == MAX_ROUNDS) {
 		if (p1.get_remaining_ships() > p2.get_remaining_ships()) {
@@ -103,10 +102,10 @@ void Game::start(char difficulty, int max_rounds) {
 			cout << "Game over, winner is " << p2.get_name() << " in " << MAX_ROUNDS << " rounds\n";
 		}
 	}
-	if (p1.get_remaining_ships() > p2.get_remaining_ships()) {
+	if (p2.destroyed()) {
 		cout << "Game over, winner is " << p1.get_name() << " in " << num_rounds << " rounds\n";
 	}
-	if (p1.get_remaining_ships() < p2.get_remaining_ships()) {
+	if (p1.destroyed()) {
 		cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds << " rounds\n";
 	}
 }
