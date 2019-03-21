@@ -27,24 +27,20 @@ Game::Game() {
 Game::Game(Player player1, string grid1, Player player2, string grid2) {
 	p1 = player1;
 	p2 = player2;
-	if (grid1 == "grid1.txt") {
-		if (grid1.length() != 0) {
-			if (!p1.load_grid_file(grid1)) {
-				cout << "Generating random grid for " << player1.get_name() << endl;
-				generate_random_grid(p1);
-			}
+	if (grid1.length() != 0) {
+		if (!p1.load_grid_file(grid1)) {
+			cout << "Generating random grid for " << player1.get_name() << endl;
+			generate_random_grid(p1);
 		}
 	}
 	else {
 		cout << "Generating random grid for " << player1.get_name() << endl;
 		generate_random_grid(p1);
 	}
-	if (grid2 == "grid2.txt") {
-		if (grid2.length() != 0) {
-			if (!p2.load_grid_file(grid2)) {
-				cout << "Generating random grid for " << player2.get_name() << endl;
-				generate_random_grid(p2);
-			}
+	if (grid2.length() != 0) {
+		if (!p2.load_grid_file(grid2)) {
+			cout << "Generating random grid for " << player2.get_name() << endl;
+			generate_random_grid(p2);
 		}
 	}
 	else {
