@@ -25,22 +25,26 @@ Game::Game() {
 }
 
 Game::Game(Player player1, string grid1, Player player2, string grid2) {
-	player1 = p1;
-	player2 = p2;
-
-	if (grid1.length() == 0 || player1.load_grid_file(grid1) == false) {
-		generate_random_grid(player1);
+	p1 = player1;
+	p2 = player2;
+	if (grid1.length() != 0) {
+		if (!p1.load_grid_file(grid1)) {
+			generate_random_grid(p1);
+		}
 	}
 	else {
-		player1.load_grid_file(grid1);
+		generate_random_grid(p1);
 	}
-	if (grid2.length() == 0 || player2.load_grid_file(grid2) == false) {
-		generate_random_grid(player2);
+	if (grid2.length() != 0) {
+		if (!p2.load_grid_file(grid2)) {
+			generate_random_grid(p2);
+		}
 	}
 	else {
-		player2.load_grid_file(grid2);
+		generate_random_grid(p2);
 	}
 }
+
 
 Player Game::get_p1() {
 	return p1;
@@ -51,11 +55,9 @@ Player Game::get_p2() {
 }
 
 string Game::get_move(string player_name) {
-
 	string move = "";
-	cout << player_name << " enter your move : " << endl;
+	cout << player_name << " enter your move : ";
 	cin >> move;
-
 	return move;
 }
 
