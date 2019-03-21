@@ -78,35 +78,34 @@ bool Game::check_valid_move(string move) {
 }
 
 void Game::start(char difficulty, int max_rounds) {
-	int num_rounds = 1;
-	while (num_rounds <= max_rounds && p1.get_remaining_ships() != 0 &&
-		p2.get_remaining_ships() != 0) {
+	int num_rounds = 0;
+	while ((num_rounds < MAX_ROUNDS) && !p1.destroyed() && !p2.destroyed()) {
 		string p1Move = get_move(p1.get_name());
 		while (!check_valid_move(p1Move)) {
 			p1Move = get_move(p1.get_name());
 		}
+		num_rounds++;
 		Position move(p1Move.at(0), p1Move.at(1));
 		p1.attack(p2, move);
 		opponent_make_move(difficulty);
 
-		cout << "Your grid" << endl; // Make this player 1 name's grid
+		cout << "Your grid" << endl;
 		p1.print_grid();
-		cout << "CPU's grid" << endl; // Same thing here
+		cout << "CPU's grid" << endl;
 		p1.print_opponent_grid();
-		num_rounds++;
 	}
-	if (num_rounds - 1 == max_rounds) {
+	if (num_rounds == MAX_ROUNDS) {
 		if (p1.get_remaining_ships() > p2.get_remaining_ships()) {
-			cout << "Game over, winner is " << p1.get_name() << " in " << max_rounds << " rounds\n";
+			cout << "Game over, winner is " << p1.get_name() << " in " << MAX_ROUNDS << " rounds\n";
 		}
 		else if (p1.get_remaining_ships() < p2.get_remaining_ships()) {
-			cout << "Game over, winner is " << p2.get_name() << " in " << max_rounds << " rounds\n";
+			cout << "Game over, winner is " << p2.get_name() << " in " << MAX_ROUNDS << " rounds\n";
 		}
 	}
-	if (p1.get_remaining_ships() > p2.get_remaining_ships()) {
+	if (p2.destroyed()) {
 		cout << "Game over, winner is " << p1.get_name() << " in " << num_rounds << " rounds\n";
 	}
-	if (p1.get_remaining_ships() < p2.get_remaining_ships()) {
+	if (p1.destroyed()) {
 		cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds << " rounds\n";
 	}
 }
