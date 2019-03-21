@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2019 University of Michigan EECS183
  *
@@ -16,14 +17,14 @@
 
 #include "Game.h"
 
-
+//Default constructor
 Game::Game() {
-	Player p1 = {};
-	Player p2 = {};
-
-	return;
+	p1 = {};
+	p2 = {};
 }
 
+
+//Non-default constructor
 Game::Game(Player player1, string grid1, Player player2, string grid2) {
 	p1 = player1;
 	p2 = player2;
@@ -49,15 +50,19 @@ Game::Game(Player player1, string grid1, Player player2, string grid2) {
 	}
 }
 
-
+//p1 getter
 Player Game::get_p1() {
 	return p1;
 }
 
+
+//p2 getter
 Player Game::get_p2() {
 	return p2;
 }
 
+
+//move getter
 string Game::get_move(string player_name) {
 	string move = "";
 	cout << player_name << " enter your move: ";
@@ -66,6 +71,10 @@ string Game::get_move(string player_name) {
 	return move;
 }
 
+
+
+
+//check to see if the move is valid first looking at length and then the range
 bool Game::check_valid_move(string move) {
 	if (move.length() != 2) {
 		cout << p1.get_name() << " you entered an invalid input" << endl;
@@ -84,40 +93,60 @@ bool Game::check_valid_move(string move) {
 	}
 }
 
+
+//starts the game
 void Game::start(char difficulty, int max_rounds) {
 	int num_rounds = 1;
 	while ((num_rounds - 1 <= max_rounds)) {
+		//first plays a certain round
+		//gets move from p1
 		string p1Move = get_move(p1.get_name());
+		//makes sure the move is valid 
+		//if it is not then the loop cycles until
+		//the move is valid
 		while (!check_valid_move(p1Move)) {
 			p1Move = get_move(p1.get_name());
 		}
+		//as the round begins the number of rounds increases
 		num_rounds++;
 		Position move(p1Move.at(0), p1Move.at(1));
+		//player 1 attacks
 		p1.attack(p2, move);
+		//if player 2 is destroyed
 		if (p2.destroyed()) {
+			//grids for both players print
 			cout << "Your grid" << endl;
 			p1.print_grid();
 			cout << "CPU's grid" << endl;
 			p1.print_opponent_grid();
+			//the winner is then announced
 			cout << "Game over, winner is " << p1.get_name() << " in " << num_rounds - 1 << " rounds\n";
-			return;
+			break;
 		}
+		//an opponent makes a move depending on the diificulty
 		opponent_make_move(difficulty);
+		//if player 1 is destroyed 
 		if (p1.destroyed()) {
+			//the grids for both players print
 			cout << "Your grid" << endl;
 			p1.print_grid();
 			cout << "CPU's grid" << endl;
 			p1.print_opponent_grid();
-			cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds - 1 << " rounds\n";
-			return;
+			//player 2 is announced as the winner
+			cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds  - 1 << " rounds\n";
+			break;
 		}
 
+		//Otherwise the grids still print
 		cout << "Your grid" << endl;
 		p1.print_grid();
 		cout << "CPU's grid" << endl;
 		p1.print_opponent_grid();
 	}
+
+	//If the number of rounds is equal to the max_rounds
 	if (num_rounds - 1 == max_rounds) {
+		//whichever player has more ships is declared the winner 
 		if (p1.get_remaining_ships() > p2.get_remaining_ships()) {
 			cout << "Game over, winner is " << p1.get_name() << " in " << max_rounds << " rounds\n";
 		}
@@ -125,6 +154,7 @@ void Game::start(char difficulty, int max_rounds) {
 			cout << "Game over, winner is " << p2.get_name() << " in " << max_rounds << " rounds\n";
 		}
 	}
+
 	return;
 }
 
@@ -141,6 +171,7 @@ void Game::generate_random_grid(Player &p) {
 		int i = p.get_num_ships() + 1;
 		if (i > 2) {
 			i--;
+
 		}
 
 		// generate random position 1
@@ -194,8 +225,8 @@ void Game::generate_random_grid(Player &p) {
 			}
 			else {
 				// start and end depends on if pos1 is to the left of pos2
-				int start = pos1.get_row() < pos2.get_row() ?
-					pos1.get_row() : pos2.get_row();
+				int start = pos1.get_row() < pos2.get_row();
+				pos1.get_row(); pos2.get_row();
 				int end = pos1.get_row() < pos2.get_row() ?
 					pos2.get_row() : pos1.get_row();
 				// Loop through start and end to check if any of the positions
@@ -225,6 +256,8 @@ void Game::generate_random_grid(Player &p) {
 	}
 }
 
+
+
 void Game::opponent_make_move(char difficulty) {
 	if (difficulty == EMULATE) {
 		Position next;
@@ -250,6 +283,7 @@ void Game::opponent_make_move(char difficulty) {
 		}
 		p2.attack(p1, next);
 		cout << "You received an attack at " << next << endl << endl;
+
 #endif
 	}
 	else if (difficulty == MEDIUM) {
@@ -257,4 +291,6 @@ void Game::opponent_make_move(char difficulty) {
 		// TODO: implement for S'more version
 	}
 }
+
+
 
