@@ -151,14 +151,14 @@ void Player::attack(Player &opponent, Position pos) {
 			opponent.grid[pos.get_row()][pos.get_col()] = MISS_LETTER;
 		}
 		else if (is_ship_there) {
-			cout << name << " " << pos << " " << "hit\n";
-			opponent_grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
-			opponent.grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 			opponent.ships[ship_num].hit();
 			if (opponent.ships[ship_num].has_sunk()) {
 				opponent.remaining_ships--;
 				announce_ship_sunk(opponent.ships[ship_num].get_size());
 			}
+			cout << name << " " << pos << " " << "hit\n";
+			opponent_grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
+			opponent.grid[pos.get_row()][pos.get_col()] = HIT_LETTER;
 		}
 	}
 }
