@@ -4,8 +4,8 @@
  * Position.cpp
  * Project UID 4cd2d66df3154b6c8b0ff27aa6791edb
  *
- * <Kevin Wang and Heidi Schmidt>
- * <kevwan and heschmid>
+ * <#Heidi Schmidt, Kevin Wang#>
+ * <#heschmid, kevwan#>
  *
  * Project 4: Battleship
  *
@@ -16,96 +16,93 @@
 #include "utility.h"
 
 
+//Default constructor
 Position::Position() {
-	row = check_range(0);
-	col = check_range(0);
+	row = 0;
+	col = 0;
+	return;
 }
 
+
+//Non-Default constructor
 Position::Position(int row_in, int col_in) {
+
 	row = check_range(row_in);
 	col = check_range(col_in);
+
+	return;
 }
 
+//Non-default constructor
 Position::Position(char row_in, char col_in) {
-	int tempCol;
-	if (col_in >= 'a' && col_in <= 'z') {
-		tempCol = col_in - 'a';
+
+	row = check_range((int)(row_in - '1'));
+	if (col_in >= 'A' && col_in <= 'Z') {
+		col = check_range((int)col_in - 'A');
 	}
-	else if (col_in >= 'A' && col_in <= 'Z') {
-		tempCol = col_in - 'A';
+	else if (col_in >= 'a' && col_in <= 'z') {
+		col = check_range((int)col_in - 'a');
 	}
-	col = check_range(tempCol);
-	int tempRow;
-	if (row_in >= '1' && row_in <= '9') {
-		tempRow = row_in - '1';
-	}
-	row = check_range(tempRow);
 }
 
+//row getter
 int Position::get_row() {
 	return row;
 }
 
+//row setter
 void Position::set_row(int row_in) {
 	row = check_range(row_in);
+	return;
 }
 
+//col getter
 int Position::get_col() {
 	return col;
 }
 
+//col setter
 void Position::set_col(int col_in) {
 	col = check_range(col_in);
+	return;
 }
 
+//Reading in the file 
 void Position::read(istream &is) {
-	char tempRow;
-	char tempCol;
-	char temp;
-	for (int i = 0; i < 2; ++i) {
-		is >> temp;
-		if (temp == '(' || temp == ',' || temp == ')') {
-			is >> temp;
+	char char1, char2, char3, char4, char5;
+	is >> char1;
+		if(char1 == '(') {
+			is >> char2 >> char3 >> char4 >> char5;
+			row = check_range(char2 - '1');
+			col = check_range(tolower(char4) - 'a');
+
 		}
-		if (temp >= '1' && temp <= '9') {
-			tempRow = temp;
+		else{
+			is >> char2;
+				row = check_range(char1 - '1');
+				col = check_range(tolower(char2) - 'a');
 		}
-		if ((temp >= 'A' && temp <= 'Z') || (temp >= 'a' && temp <= 'z')) {
-			tempCol = temp;
-		}
-	}
-	int itempCol;
-	if (tempCol >= 'a' && tempCol <= 'z') {
-		itempCol = tempCol - 'a';
-	}
-	else if (tempCol >= 'A' && tempCol <= 'Z') {
-		itempCol = tempCol - 'A';
-	}
-	col = check_range(itempCol);
-	int itempRow;
-	if (tempRow >= '1' && tempRow <= '9') {
-		itempRow = tempRow - '1';
-	}
-	row = check_range(itempRow);
 }
 
+//Writing to the file
 void Position::write(ostream &os) {
 	char tempRow = '1' + row;
 	char tempCol = 'A' + col;
 	cout << "(" << tempRow << "," << tempCol << ")";
 }
 
+
+//checks the range of row and col and makes sure 
+//that they do not go out of bounds
 int Position::check_range(int val) {
 	if (val >= 0 && val < MAX_GRID_SIZE) {
 		return val;
 	}
+	else if (val < 0) {
+		return 0;
+	}
 	else {
-		if (val < 0) {
-			return 0;
-		}
-		else {
-			return MAX_GRID_SIZE - 1;
-		}
+		return MAX_GRID_SIZE - 1;
 	}
 }
 
@@ -122,3 +119,5 @@ ostream &operator<<(ostream &os, Position pos) {
 	pos.write(os);
 	return os;
 }
+
+
