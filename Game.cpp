@@ -81,7 +81,7 @@ bool Game::check_valid_move(string move) {
 
 void Game::start(char difficulty, int max_rounds) {
 	int num_rounds = 1;
-	while ((num_rounds - 1 <= max_rounds) && !p1.destroyed() && !p2.destroyed()) {
+	while ((num_rounds - 1 <= max_rounds)) {
 		string p1Move = get_move(p1.get_name());
 		while (!check_valid_move(p1Move)) {
 			p1Move = get_move(p1.get_name());
@@ -89,11 +89,27 @@ void Game::start(char difficulty, int max_rounds) {
 		num_rounds++;
 		Position move(p1Move.at(0), p1Move.at(1));
 		p1.attack(p2, move);
+		if (p2.destroyed()) {
+			cout << "Your grid" << endl;
+			p1.print_grid();
+			cout << "CPU's grid" << endl;
+			p1.print_opponent_grid();
+			cout << "Game over, winner is " << p1.get_name() << " in " << num_rounds - 1 << " rounds\n";
+			return;
+		}
 		opponent_make_move(difficulty);
+		if (p1.destroyed()) {
+			cout << "Your grid" << endl;
+			p1.print_grid();
+			cout << "CPU's grid" << endl;
+			p1.print_opponent_grid();
+			cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds  - 1 << " rounds\n";
+			return;
+		}
 
 		cout << "Your grid" << endl;
 		p1.print_grid();
-		cout << p2.get_name() << " grid" << endl;
+		cout << "CPU's grid" << endl;
 		p1.print_opponent_grid();
 	}
 	if (num_rounds - 1 == max_rounds) {
@@ -104,14 +120,7 @@ void Game::start(char difficulty, int max_rounds) {
 			cout << "Game over, winner is " << p2.get_name() << " in " << max_rounds << " rounds\n";
 		}
 	}
-	if (p2.destroyed()) {
-		cout << "Game over, winner is " << p1.get_name() << " in " << num_rounds << " rounds\n";
-	}
-	if (p1.destroyed()) {
-		cout << "Game over, winner is " << p2.get_name() << " in " << num_rounds << " rounds\n";
-	}
 }
-
 // Your code goes above this line.
 // Don't change the implementations below!
 
