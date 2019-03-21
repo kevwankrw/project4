@@ -26,45 +26,6 @@ using namespace std;
 
 
 int main() {
-
-/* 
-    TODO: implement the following steps. 
-    
-    (Note: some menus and prompts should be printed using 
-       functions utility.cpp, see sample runs.)
-
-    1. You must enter your name.
-
-        Prompt: "Enter your name:"
-
-    2. Print prompt and get user input from keyboard to specify whether 
-    not to read your grid from a file. The input must be the chracter 'y' or 'n'.
-
-        Prompt: "Read your grid from file grid1.txt? (y or n):"
-        Note: You may assume that a user will enter correct, valid input. 
-
-    3. Print prompt and get user input from keyboard to specify whether 
-    not to read the CPU's grid from a file. The input must be the chracter 'y' or 'n'.
-
-        Prompt: "Read CPU grid from file grid2.txt? (y or n):"
-        Note: You may assume that a user will enter correct, valid input. 
-    
-    4. Print menu and get the menu choice from keyboard to select the 
-    difficulty of the AI or quit the game. Make use of get_menu_choice in utility.cpp. 
-        
-        Prompts: "Starting game with EASY AI"
-                 "Starting game with MEDIUM AI"
-                 "Starting game with CPU EMULATION"
-        Note 1: the medium AI is not available unless you implement S'more. 
-        Note 2: CPU emulation is for debugging purposes and will NOT be autograder tested.
-
-    5. Start the game with given difficulty and MAX_ROUNDS number of rounds.
-
-    (Note: you will only play one instance of the game, i.e., after the game ends, 
-       the program ends.)
-*/
-
-
 	print_initial_header();
 
 	cout << "Enter your name:";
@@ -76,19 +37,49 @@ int main() {
 	char input1;
 	cin >> input1;
 	cout << endl;
+	string p1grid;
+	if (input1 == 'y') {
+		p1grid = "grid1.txt";
+	}
+	else {
+		p1grid = "no";
+	}
 
 	cout << "Read CPU grid from file grid2.txt? (y or n):";
 	char input2;
 	cin >> input2;
 	cout << endl;
+	string p2grid;
+	if (input2 == 'y') {
+		p2grid = "grid2.txt";
+	}
+	else {
+		p2grid = "no";
+	}
+
+	Player p1(name_val);
+	Player p2("CPU");
+	Game playGame(p1, p1grid, p2, p2grid);
 
 	int menu_choice = get_menu_choice();
+	if (menu_choice == 4) {
+		print_closer();
+		return 0;
+	}
+	else {
+		if (menu_choice == 1){
+			cout << "Starting game with EASY AI" << endl;
+		}
+		else if (menu_choice == 2) {
+			cout << "Starting game with MEDIUM AI" << endl;
+		}
+		else if (menu_choice == 3) {
+			cout << "Starting game with CPU EMULATION" << endl;
+		}
+		playGame.start(menu_choice, MAX_ROUNDS);
+		print_closer();
+		return 0;
+	}
 
-	Game playGame;
-	playGame.start(menu_choice, MAX_ROUNDS);
-
-	print_closer();
-
-	return 0;
 
 }
