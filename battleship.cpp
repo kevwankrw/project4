@@ -42,7 +42,7 @@ int main() {
 		p1grid = "grid1.txt";
 	}
 	else {
-		p1grid = "no";
+		p1grid = "";
 	}
 
 	cout << "Read CPU grid from file grid2.txt? (y or n):";
@@ -54,7 +54,7 @@ int main() {
 		p2grid = "grid2.txt";
 	}
 	else {
-		p2grid = "no";
+		p2grid = "";
 	}
 
 	Player p1(name_val);
@@ -62,24 +62,27 @@ int main() {
 	Game playGame(p1, p1grid, p2, p2grid);
 
 	int menu_choice = get_menu_choice();
+
 	if (menu_choice == 4) {
 		print_closer();
 		return 0;
 	}
-	else {
-		if (menu_choice == 1){
-			cout << "Starting game with EASY AI" << endl;
-		}
-		else if (menu_choice == 2) {
-			cout << "Starting game with MEDIUM AI" << endl;
-		}
-		else if (menu_choice == 3) {
-			cout << "Starting game with CPU EMULATION" << endl;
-		}
-		playGame.start(menu_choice, MAX_ROUNDS);
+	if (menu_choice == 1){
+		cout << "Starting game with EASY AI" << endl;
+		playGame.start(EASY, MAX_ROUNDS);
 		print_closer();
 		return 0;
 	}
-
-
+	else if (menu_choice == 2) {
+		cout << "Starting game with MEDIUM AI" << endl;
+		playGame.start(MEDIUM, MAX_ROUNDS);
+		print_closer();
+		return 0;
+	}
+	else if (menu_choice == 3) {
+		cout << "Starting game with CPU EMULATION" << endl;
+		playGame.start(EMULATE, MAX_ROUNDS);
+		print_closer();
+		return 0;
+	}
 }
