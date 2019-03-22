@@ -6,7 +6,7 @@
  *
  * Project 4: Battleship
  *
- * Contains functions for testing classes in the project. 
+ * Contains functions for testing classes in the project.
  */
 
 #include <iostream>
@@ -29,15 +29,15 @@ void test_player();
 void test_game();
 
 int main() {
-    test_position();
-    test_ship();
-    test_player();
-    test_game();
-    return 0;
+	test_position();
+	test_ship();
+	test_player();
+	test_game();
+	return 0;
 }
 
 void test_position() {
-    	Position start_pos;
+	Position start_pos;
 	Position end_pos;
 	cout << "Testing Position::Position() - default constructor\n";
 	cout << "start_pos, expected output: (1,A) actual output: " << start_pos << endl;
@@ -59,6 +59,10 @@ void test_position() {
 	Position pos5(10, 5);
 	Position pos6('7', 'K');
 	Position pos7(-5, -7);
+	Position pos8('0', 'z');
+	Position pos9(0, 0);
+	Position pos10('A', '1');
+	Position pos11('9', 'A');
 
 	cout << pos1 << endl;
 	cout << pos2 << endl;
@@ -84,11 +88,15 @@ void test_position() {
 	else {
 		cout << "\nError opening grid1.txt\n";
 	}
-    return;
+	return;
 }
 
 void test_ship() {
-    Ship ship1();
+	Ship ship1;
+	cout << ship1.get_start() << endl;
+	cout << ship1.get_end() << endl;
+	cout << ship1.get_size() << endl;
+
 	Position pos1(5, 4);
 	Position pos2('4', 'A');
 	Position pos3(7, 8);
@@ -103,12 +111,12 @@ void test_ship() {
 	Ship ship6(pos5, pos6);
 	Ship ship7(pos6, pos7);
 
-	ship2.has_position(pos1);
-	ship3.has_position(pos2);
-	ship4.has_position(pos3);
-	ship5.has_position(pos4);
-	ship6.has_position(pos5);
-	ship7.has_position(pos6);
+	cout << ship2.has_position(pos1) << endl;
+	cout << ship3.has_position(pos2) << endl;
+	cout << ship4.has_position(pos3) << endl;
+	cout << ship5.has_position(pos4) << endl;
+	cout << ship6.has_position(pos5) << endl;
+	cout << ship7.has_position(pos6) << endl;
 
 	ship2.hit();
 	ship2.hit();
@@ -119,11 +127,11 @@ void test_ship() {
 	ship6.hit();
 	ship7.hit();
 
-    return;
+	return;
 }
 
 void test_player() {
-   	Player p1();
+	Player p1;
 	Player p2("player1");
 	Player p3("player2");
 	Player p4("player3");
@@ -164,22 +172,36 @@ void test_player() {
 	p6.attack(p2, pos5);
 
 	p2.load_grid_file("grid1.txt");
-	p3.load_grid_file("blank.txt");
 	p4.load_grid_file("grid2.txt");
-	p5.load_grid_file("gridB.txt");
-    return;
+	return;
 }
 
 void test_game() {
 	Player p1("B");
 	Player p2("Y");
-	Game game(p1, "grid1.txt", p2, "grid2.txt");
+	string grid1 = "yes";
+	string grid2 = "no";
+	Game game1(p1, "grid1.txt", p2, "grid2.txt");
+	Game game2(p1, "", p2, "");
+	Game game3(p1, grid1, p2, grid2);
 
-	Player p3 = game.get_p1();
-	Player p4 = game.get_p2();
-	string move1 = game.get_move(p1.get_name());
-	string move2 = game.get_move(p2.get_name());
-	cout << game.check_valid_move(move1) << endl;
-	cout << game.check_valid_move(move2) << endl;
+	Player p3 = game1.get_p1();
+	cout << p3.get_name();
+	Player p4 = game2.get_p2();
+	cout << p4.get_name();
+
+	cout << game1.check_valid_move("1a") << endl;
+	cout << game1.check_valid_move("1A") << endl;
+	cout << game1.check_valid_move("1h") << endl;
+	cout << game1.check_valid_move("1H") << endl;
+	cout << game1.check_valid_move("8A") << endl;
+	cout << game1.check_valid_move("8H") << endl;
+	cout << game1.check_valid_move("9C") << endl;
+	cout << game1.check_valid_move("3D") << endl;
+	cout << game1.check_valid_move("3I") << endl;
+	cout << game1.check_valid_move("0A") << endl;
+	cout << game1.check_valid_move("(1,A)") << endl;
+	cout << game1.check_valid_move("12H") << endl;
+	cout << game1.check_valid_move("1,D") << endl;
 }
 
