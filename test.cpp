@@ -1,3 +1,4 @@
+
 /**
  * Copyright 2019 University of Michigan EECS183
  *
@@ -63,6 +64,7 @@ void test_position() {
 	Position pos9(0, 0);
 	Position pos10('A', '1');
 	Position pos11('9', 'A');
+	Position pos12(-0, -0);
 
 	cout << pos1 << endl;
 	cout << pos2 << endl;
@@ -71,6 +73,11 @@ void test_position() {
 	cout << pos5 << endl;
 	cout << pos6 << endl;
 	cout << pos7 << endl;
+	cout << pos8 << endl;
+	cout << pos9 << endl;
+	cout << pos10 << endl;
+	cout << pos11 << endl;
+	cout << pos12 << endl;
 
 
 	ifstream input_file;
@@ -104,12 +111,21 @@ void test_ship() {
 	Position pos5(10, 5);
 	Position pos6('7', 'K');
 	Position pos7(-5, -7);
+	Position pos8(2, 1);
+	Position pos9(4, 0);
+
 	Ship ship2(pos1, pos2);
 	Ship ship3(pos2, pos3);
 	Ship ship4(pos3, pos4);
 	Ship ship5(pos4, pos5);
 	Ship ship6(pos5, pos6);
 	Ship ship7(pos6, pos7);
+	Ship ship8(pos1, pos8);
+	Ship ship9(pos1, pos9);
+	Ship ship10(pos8, pos1);
+	Ship ship11(pos9, pos1);
+
+	
 
 	cout << ship2.has_position(pos1) << endl;
 	cout << ship3.has_position(pos2) << endl;
@@ -121,14 +137,27 @@ void test_ship() {
 	ship2.hit();
 	ship2.hit();
 	ship2.hit();
+	ship2.hit();
+	ship2.hit();
+	ship2.hit();
 	ship3.hit();
+	ship3.hit();
+	ship3.hit();
+	ship4.hit();
+	ship4.hit();
+	ship4.hit();
 	ship4.hit();
 	ship5.hit();
 	ship6.hit();
 	ship7.hit();
+	ship7.hit();
+
+
 
 	return;
 }
+
+
 
 void test_player() {
 	Player p1;
@@ -158,6 +187,13 @@ void test_player() {
 	p4.add_ship(ship4);
 	p5.add_ship(ship5);
 	p6.add_ship(ship6);
+	p2.add_ship(ship3);
+	p2.add_ship(ship4);
+	p2.add_ship(ship5);
+	p3.add_ship(ship2);
+	p4.add_ship(ship4); 
+
+
 
 	p2.position_not_hit(pos1);
 	p3.position_not_hit(pos2);
@@ -165,18 +201,36 @@ void test_player() {
 	p5.position_not_hit(pos4);
 	p6.position_not_hit(pos5);
 
+	Position pos8(6, 5);
+	Position pos9(3, 1);
+	Position pos10(5, 0);
+	Position pos11(0, 6);
+	Position pos12(5, 5);
+
+
 	p2.attack(p3, pos1);
 	p3.attack(p4, pos2);
 	p4.attack(p5, pos3);
 	p5.attack(p6, pos4);
 	p6.attack(p2, pos5);
+	p3.attack(p2, pos8);
+	p3.attack(p2, pos9);
+	p3.attack(p2, pos10);
+	p3.attack(p2, pos11);
+	p3.attack(p2, pos12);
+
+
 
 	p2.load_grid_file("grid1.txt");
 	p4.load_grid_file("grid2.txt");
+	p3.load_grid_file("");
+	p5.load_grid_file("gridB.txt");
+	p6.load_grid_file("dgdgdvjw.txt");
 	return;
 }
 
 void test_game() {
+
 	Player p1("B");
 	Player p2("Y");
 	string grid1 = "yes";
@@ -184,6 +238,7 @@ void test_game() {
 	Game game1(p1, "grid1.txt", p2, "grid2.txt");
 	Game game2(p1, "", p2, "");
 	Game game3(p1, grid1, p2, grid2);
+	Game game4();
 
 	Player p3 = game1.get_p1();
 	cout << p3.get_name();
