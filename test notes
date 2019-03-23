@@ -1,22 +1,23 @@
 POSITION_NON_DEFAULT_CONSTRUCTOR_2
-	no idea
+	still no clue
 SHIP_NON_DEFAULT_CONSTRUCTOR
-	RME mentions diagonal and l-shaped ships are not allowed
-	only vertical and horizontal ships allowed
+	tried a diagonal and l shape, did not work. we'll have to try something else
 SHIP_HIT
-	maybe somehow try to cout something? (maybe use has_ship_sunk?)
+	can't really cout anything, idk what to do here
 PLAYER_DEFAULT_CONSTRUCTOR
-	should work now, had to get rid of the ()
+	Nope, did not work
 PLAYER_ADD_SHIP_1
 PLAYER_ADD_SHIP_2
 PLAYER_ADD_SHIP_3
 	RME mentions added ship does not intersect with previously added ships
 	maybe cout num_ships and remaining_ships somehow?
+	
+	I tried to do what you said but idk what's happening here
 PLAYER_ATTACK_1
 	honestly, just brute force this one, no other idea
+	
+	still nothing
 PLAYER_ATTACK_2
 	try to have a variety of different positions, not just start and end pos
-PLAYER_LOAD_GRID_FILE
-	no idea
-GAME_NON_DEFAULT_CONSTRUCTOR
-	no idea
+	
+	tried different positions, still not working
