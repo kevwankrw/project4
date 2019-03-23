@@ -1,4 +1,3 @@
-
 /**
  * Copyright 2019 University of Michigan EECS183
  *
@@ -58,27 +57,35 @@ void test_position() {
 	Position pos3(7, 8);
 	Position pos4('5', 'h');
 	Position pos5(10, 5);
-	Position pos6('7', 'K');
 	Position pos7(-5, -7);
-	Position pos8('0', 'z');
 	Position pos9(0, 0);
-	Position pos10('A', '1');
 	Position pos11('9', 'A');
 	Position pos12(-0, -0);
+	
+	for (char i = '0'; i < '9' + 1; i++) {
+		for (char j = 'a'; j < 'h' + 1; j++) {
+			Position pos13(i, j);
+			cout << pos13;
+		}
+	}
+
+	for (char i = '0'; i < '9' + 1; i++) {
+		for (char j = 'A'; j < 'H' + 1; j++) {
+			Position pos14(i, j);
+			cout << pos14;
+		}
+	}
 
 	cout << pos1 << endl;
 	cout << pos2 << endl;
 	cout << pos3 << endl;
 	cout << pos4 << endl;
 	cout << pos5 << endl;
-	cout << pos6 << endl;
 	cout << pos7 << endl;
-	cout << pos8 << endl;
 	cout << pos9 << endl;
-	cout << pos10 << endl;
 	cout << pos11 << endl;
 	cout << pos12 << endl;
-
+	
 
 	ifstream input_file;
 	input_file.open("grid1.txt");
@@ -107,51 +114,61 @@ void test_ship() {
 	Position pos1(5, 4);
 	Position pos2('4', 'A');
 	Position pos3(7, 8);
-	Position pos4('5', 'h');
+	Position pos4('4', 'h');
 	Position pos5(10, 5);
 	Position pos6('7', 'K');
 	Position pos7(-5, -7);
 	Position pos8(2, 1);
 	Position pos9(4, 0);
+	Position pos10(0, 0);
+	Position pos11(9, 0);
+	Position pos12(0, 9);
+	Position pos13(0, 1);
+	Position pos14(1, 0);
 
 	Ship ship2(pos1, pos2);
-	Ship ship3(pos2, pos3);
+	Ship ship3(pos2, pos1);
 	Ship ship4(pos3, pos4);
-	Ship ship5(pos4, pos5);
-	Ship ship6(pos5, pos6);
-	Ship ship7(pos6, pos7);
-	Ship ship8(pos1, pos8);
-	Ship ship9(pos1, pos9);
-	Ship ship10(pos8, pos1);
-	Ship ship11(pos9, pos1);
-
+	Ship ship5(pos4, pos3);
+	Ship ship6(pos10, pos11);
+	Ship ship7(pos10, pos12);
+	Ship ship8(pos11, pos10);
+	Ship ship9(pos12, pos10);
+	Ship ship10(pos10, pos13);
+	Ship ship11(pos10, pos14);
+	Ship ship12(pos13, pos10);
+	Ship ship13(pos14, pos10);
 	
 
 	cout << ship2.has_position(pos1) << endl;
-	cout << ship3.has_position(pos2) << endl;
 	cout << ship4.has_position(pos3) << endl;
 	cout << ship5.has_position(pos4) << endl;
 	cout << ship6.has_position(pos5) << endl;
 	cout << ship7.has_position(pos6) << endl;
+	cout << ship8.has_position(pos7) << endl;
+	cout << ship9.has_position(pos8) << endl;
+	cout << ship10.has_position(pos9) << endl;
+	for (int i = 0; i < 10; i++) {
+		ship2.hit();
+		cout << ship2.has_sunk();
+		ship3.hit();
+		cout << ship3.has_sunk();
+		ship4.hit();
+		cout << ship4.has_sunk();
+		ship5.hit();
+		cout << ship5.has_sunk();
+		ship6.hit();
+		cout << ship6.has_sunk();
+		ship7.hit();
+		cout << ship7.has_sunk();
+		ship8.hit();
+		cout << ship8.has_sunk();
+		ship9.hit();
+		cout << ship9.has_sunk();
+		ship10.hit();
+		cout << ship10.has_sunk();
 
-	ship2.hit();
-	ship2.hit();
-	ship2.hit();
-	ship2.hit();
-	ship2.hit();
-	ship2.hit();
-	ship3.hit();
-	ship3.hit();
-	ship3.hit();
-	ship4.hit();
-	ship4.hit();
-	ship4.hit();
-	ship4.hit();
-	ship5.hit();
-	ship6.hit();
-	ship7.hit();
-	ship7.hit();
-
+	}
 
 
 	return;
@@ -161,37 +178,44 @@ void test_ship() {
 
 void test_player() {
 	Player p1;
+	cout << p1.get_name();
+	cout << p1.get_num_ships();
+	cout << p1.get_remaining_ships();
+	p1.print_opponent_grid();
+	p1.print_opponent_grid();
 	Player p2("player1");
 	Player p3("player2");
 	Player p4("player3");
 	Player p5("player4");
 	Player p6("player5");
 
+
 	Position pos1(5, 4);
 	Position pos2('4', 'A');
 	Position pos3(7, 8);
-	Position pos4('5', 'h');
+	Position pos4('4', 'h');
 	Position pos5(10, 5);
 	Position pos6('7', 'K');
 	Position pos7(-5, -7);
-	Ship ship2(pos1, pos2);
-	Ship ship3(pos2, pos3);
-	Ship ship4(pos3, pos4);
-	Ship ship5(pos4, pos5);
-	Ship ship6(pos5, pos6);
-	Ship ship7(pos6, pos7);
+	Position pos8(2, 1);
+	Position pos9(4, 0);
+	Position pos10(0, 0);
+	Position pos11(9, 0);
+	Position pos12(0, 9);
+	Position pos13(0, 1);
+	Position pos14(1, 0);
 
-
-	p2.add_ship(ship2);
-	p3.add_ship(ship3);
-	p4.add_ship(ship4);
-	p5.add_ship(ship5);
-	p6.add_ship(ship6);
-	p2.add_ship(ship3);
-	p2.add_ship(ship4);
-	p2.add_ship(ship5);
-	p3.add_ship(ship2);
-	p4.add_ship(ship4); 
+	Ship ship_list[12] = { { pos1, pos2 }, { pos2, pos1 }, {pos3, pos4 },{pos4, pos3},
+						   {pos10, pos11}, {pos10,pos12},{pos11,pos10}, {pos12,pos10},
+						   {pos10, pos13}, {pos10, pos14} ,{pos13, pos10}, {pos14,pos10 } };
+	for (int i = 0; i < 12; i++) {
+		p1.add_ship(ship_list[i]);
+		cout << p1.get_num_ships();
+		cout << p1.get_remaining_ships();
+		p1.print_grid();
+		p1.print_opponent_grid();
+	}
+	
 
 
 
@@ -201,23 +225,52 @@ void test_player() {
 	p5.position_not_hit(pos4);
 	p6.position_not_hit(pos5);
 
-	Position pos8(6, 5);
-	Position pos9(3, 1);
-	Position pos10(5, 0);
-	Position pos11(0, 6);
-	Position pos12(5, 5);
+	Position pos15(6, 5);
+	Position pos16(3, 1);
+	Position pos17(5, 0);
+	Position pos18(0, 6);
+	Position pos19(5, 5);
 
 
 	p2.attack(p3, pos1);
+	p3.print_grid();
+	p2.print_opponent_grid();
+
 	p3.attack(p4, pos2);
+	p3.print_opponent_grid();
+	p4.print_grid();
+
 	p4.attack(p5, pos3);
+	p4.print_opponent_grid();
+	p5.print_grid();
+
 	p5.attack(p6, pos4);
+	p5.print_opponent_grid();
+	p6.print_grid();
+
 	p6.attack(p2, pos5);
+	p6.print_opponent_grid();
+	p2.print_grid();
+
 	p3.attack(p2, pos8);
+	p3.print_opponent_grid();
+	p2.print_grid();
+
 	p3.attack(p2, pos9);
+	p3.print_opponent_grid();
+	p2.print_grid();
+
 	p3.attack(p2, pos10);
+	p3.print_opponent_grid();
+	p2.print_grid();
+
 	p3.attack(p2, pos11);
+	p3.print_opponent_grid();
+	p2.print_grid();
+
 	p3.attack(p2, pos12);
+	p3.print_opponent_grid();
+	p2.print_grid();
 
 
 
@@ -259,4 +312,3 @@ void test_game() {
 	cout << game1.check_valid_move("12H") << endl;
 	cout << game1.check_valid_move("1,D") << endl;
 }
-
